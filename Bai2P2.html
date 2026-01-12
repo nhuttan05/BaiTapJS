@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="bill" placeholder="Hoa Don">
+    <button id="click">click</button>
+
+    <script>
+        var button = document.getElementById('click');
+        var bill = parseFloat(document.getElementById('bill').value);
+        function calcTip (bill) {
+            var tip = 0;
+            if (bill >= 50 && bill <= 300) {
+                tip = bill * (15 / 100);
+            } else {
+                tip = bill * (20 / 100);
+            }
+            return tip;
+        }
+        
+        const bills = [
+            125,
+            555,
+            44
+        ]
+
+        const tips = [
+            calcTip(bills[0]),
+            calcTip(bills[1]),
+            calcTip(bills[2])
+        ]
+        
+        const totals = [
+            bills[0] + calcTip(bills[0]),
+            bills[1] + calcTip(bills[1]),
+            bills[2] + calcTip(bills[2])
+        ]
+
+        console.log('Bills: ' + bills);
+        console.log('Tips: ' + tips);
+        console.log('Totals : ' + totals);
+    </script>
+</body>
+</html>

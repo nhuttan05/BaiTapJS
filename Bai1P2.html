@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="dolp1" placeholder="dolphin score 1">
+    <input type="text" id="dolp2" placeholder="dolphin score 2">
+    <input type="text" id="dolp3" placeholder="dolphin score 3">
+    <br>
+    <input type="text" id="koal1" placeholder="koalas score 1">
+    <input type="text" id="koal2" placeholder="koalas score 2">
+    <input type="text" id="koal3" placeholder="koalas score 3">
+    <button id="click">click</button>
+    <script>
+        var button = document.getElementById('click');
+        function calcAverage (score1, score2, score3) {
+            var aver = score1 + score2 + score3;
+            return aver / 3;
+        }
+
+        function checkWinner (avgD, avgK) {
+            if (avgD >= (avgK * 2)) {
+                console.log('Dolphin win ('+ avgD +' vs. ' + avgK + ')');
+            } else if (avgK >= (avgD * 2)) {
+                console.log('Koalas win ('+ avgK +' vs. ' + avgD + ')');
+            } else {
+                console.log('Result is not double');
+            }
+        }
+
+        button.onclick = () => {
+            var dol1 = parseFloat(document.getElementById('dolp1').value);
+            var dol2 = parseFloat(document.getElementById('dolp2').value);
+            var dol3 = parseFloat(document.getElementById('dolp3').value);
+            var koal1 = parseFloat(document.getElementById('koal1').value);
+            var koal2 = parseFloat(document.getElementById('koal2').value);
+            var koal3 = parseFloat(document.getElementById('koal3').value);
+            var averageD = calcAverage(dol1, dol2, dol3);
+            var averageK = calcAverage(koal1, koal2, koal3);
+            checkWinner(averageD, averageK);
+        }
+    </script>
+</body>
+</html>
