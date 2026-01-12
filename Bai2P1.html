@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="massJ" type="text" placeholder="Mass Jonh">
+    <input id="heightJ" type="text" placeholder="Height Jonh"> <br>
+    <input id="massM" type="text" placeholder="Mass Mass">
+    <input id="heightM" type="text" placeholder="Height Mass">
+    <button id="click">click</button>
+    <script>
+
+        var BMIJ = 0;
+        var BMIM = 0;
+        var button = document.getElementById("click");
+
+        button.onclick = () => {
+            var massJ = document.getElementById('massJ').value;
+            var heightJ = document.getElementById('heightJ').value;
+            var massM = document.getElementById('massM').value;
+            var heightM = document.getElementById('heightM').value;
+
+            BMIJ = massJ / heightJ ** 2;
+            BMIM = massM / heightM ** 2;
+
+            if (BMIJ > BMIM) {
+                console.log('John\'s BMI ' + (BMIM.toFixed(2)) + ' is higher than Mark\'s ' + (BMIM.toFixed(2)) + '!');
+            }
+            else {
+                console.log("Mark's BMI " + (BMIM.toFixed(2)) + " is higher than John's" + (BMIJ.toFixed(2)) + "!");
+            }
+        }
+    </script>
+</body>
+</html>

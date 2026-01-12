@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="dolps1" placeholder="score dolphin 1">
+    <input type="text" id="dolps2" placeholder="score dolphin 2">
+    <input type="text" id="dolps3" placeholder="score dolphin 3">
+    <br>
+    <input type="text" id="koals1" placeholder="score koalas 1">
+    <input type="text" id="koals2" placeholder="score koalas 2">
+    <input type="text" id="koals3" placeholder="score koalas 3">
+    <button id="click">click</button>
+    <script>
+        
+        
+        var button = document.getElementById('click');
+        button.onclick= () => {
+            var dolps1 = parseFloat(document.getElementById('dolps1').value);
+            var dolps2 = parseFloat(document.getElementById('dolps2').value);
+            var dolps3 = parseFloat(document.getElementById('dolps3').value);
+
+            var koals1 = parseFloat(document.getElementById('koals1').value);
+            var koals2 = parseFloat(document.getElementById('koals2').value);
+            var koals3 = parseFloat(document.getElementById('koals3').value);
+
+            var averageD = (dolps1 + dolps2 + dolps3) / 3;
+            var averageK = (koals1 + koals2 + koals3) / 3;
+
+            console.log('aver Dolp ' + averageD);
+            console.log('aver Koal ' + averageK);
+
+            if (averageD > averageK) {
+                console.log('Dolphin Win with score ' + averageD);
+            } else {
+                console.log('Koalas Win with score ' + averageK);
+            }
+        }
+    </script>
+</body>
+</html>
