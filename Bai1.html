@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const data1 = [17, 21, 23];
+        const data2 = [12, 5, -5, 0, 4];
+        const result = [];
+        function printForecast (arr) {
+            for (let i = 0; i < arr.length; i++) {
+                result.push(`... ${arr[i]}°C in ${i + 1} days`);
+            }
+            return console.log(result.join('') + ' ...');
+        }
+
+        printForecast(data1);
+        printForecast(data2);
+    </script>
+</body>
+</html>
