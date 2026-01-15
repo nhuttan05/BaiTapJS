@@ -6,6 +6,80 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <script>
+        const game = {
+            team1: 'Bayern Munich',
+            team2: 'Borrussia Dortmund',
+            players: [
+                [
+                    'Neuer',
+                    'Pavard',
+                    'Martinez',
+                    'Alaba',
+                    'Davies',
+                    'Kimmich',
+                    'Goretzka',
+                    'Coman',
+                    'Muller',
+                    'Gnarby',
+                    'Lewandowski',
+                ],
+                [
+                    'Burki',
+                    'Schulz',
+                    'Hummels',
+                    'Akanji',
+                    'Hakimi',
+                    'Weigl',
+                    'Witsel',
+                    'Hazard',
+                    'Brandt',
+                    'Sancho',
+                    'Gotze',
+                ],
+            ],
+            score: '4:0',
+            scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+            date: 'Nov 9th, 2037',
+            odds: {
+                team1: 1.33,
+                x: 3.25,
+                team2: 6.5,
+            },
+        };
+        const [players1, players2] = game.players;
+        
+        console.log('- List of team players1: ' + players1.join(', '));
+        console.log('- List of team players2: ' + players2.join(', '));
+        
+        const [gk, ...fieldPlayers] = players1;
+        console.log('- Goalkeeper: ' + gk);
+
+        const allPlayers = [...players1, ...players2];
+
+        console.log('- All players of two teams: ' + allPlayers.join(', '));
+        
+        const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+        console.log('- Final players1: ' + players1Final.join(', '));
+
+        const { odds: {team1, x: draw, team2} } = game;
+        console.log(`- Odd of victory ${game.team1}: ${team1}`);
+        console.log(`- Odd of draw: ${draw}`);
+        console.log(`- Odd of victory ${game.team2}: ${team2}`);
+
+        console.log('- Print goals:');
+        const printGoals = function(...players) {
+            console.log(`${players.length} goals were scored`);
+            players.forEach(player => console.log(player));
+        };
+
+        printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+        console.log('- Test printGoals with game.scored:');
+        printGoals(...game.scored);
+        
+        team1 < team2 && console.log('- Result: Team 1 is more likely to win');
+        team1 > team2 && console.log('- Result: Team 2 is mire likely to win');
+        
+    </script>
 </body>
 </html>
