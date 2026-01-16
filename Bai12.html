@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const dogs = [
+            { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+            { weight: 8, curFood: 200, owners: ['Matilda'] },
+            { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+            { weight: 32, curFood: 340, owners: ['Michael'] },
+        ];
+
+        dogs.forEach(dog => (dog.reFood = Math.trunc(dog.weight ** 0.75 * 28)));
+        console.log("1. Mảng dogs sau khi thêm recFood:", dogs);
+
+        const sarahsDog = dogs.find(dog => dog.owners.includes('Sarah'));
+        console.log(`2. Chó của Sarah đang ăn quá ${sarahsDog.curFood > sarahsDog.reFood ? 'nhiều' : 'ít'}`);
+        
+        const ownersEatTooMuch = dogs
+            .filter(dog => dog.curFood > dog.reFood)
+            .flatMap(dog => dog.owners);
+
+        const ownersEatToolLittle = dogs 
+            .filter(dog => dog.curFood < dog.reFood)
+            .flatMap(dog => dog.owners);
+
+        console.log(`4. ${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+        console.log(`4. ${ownersEatToolLittle.join( 'and' )}'s dogs eat too little!`);
+        
+        console.log("5. Có chó ăn đúng lượng khuyến nghị:", dogs.some(dog => dog.curFood === dog.reFood));
+        
+        const checkEatingOkay = dog => 
+            dog.curFood > dog.reFood * 0.9 && dog.curFood < dog.reFood * 1.1;
+
+        console.log("6. Có chó ăn ở mức tạm ổn:", dogs.some(checkEatingOkay));
+
+
+        const dogsEatingOkay = dogs.filter(checkEatingOkay);
+        console.log("7. Danh sách các chú chó ăn tạm ổn:", dogsEatingOkay);
+        
+        const dogsSorted = dogs.slice().sort((a, b) => a.reFood - b.reFood);
+        console.log("8. Mảng đã sắp xếp (bản sao):", dogsSorted);
+        
+    </script>
+</body>
+</html>
