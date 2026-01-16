@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async/Await Image Challenge</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: #f0f2f5;
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .images img {
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        /* Class dành cho Part 2 */
+        .parallel {
+            border: 5px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>Async/Await Image Loader</h1>
+    <div class="images"></div>
+
+    <script>
+        const imgContainer = document.querySelector('.images');
+
+        const wait = function (seconds) {
+            return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+        };
+
+        const createImage = function (imgPath) {
+            return new Promise((resolve, reject) => {
+                const img = document.createElement('img');
+                img.src = imgPath;
+
+                img.addEventListener('load', () => {
+                    imgContainer.append(img);
+                    resolve(img);
+                });
+
+                img.addEventListener('error', () => 
+                    reject(new Error('Không tìm thấy ảnh tại: ' + imgPath))
+                );
+            });
+        };
+
+        const loadNPause = async function () {
+            try {
+                let img = await createImage('https://picsum.photos/id/10/500/300');
+                console.log('Ảnh 1 đã tải xong');
+                await wait(2);
+                img.style.display = 'none';
+
+                img = await createImage('https://picsum.photos/id/20/500/300');
+                console.log('Ảnh 2 đã tải xong');
+                await wait(2);
+                img.style.display = 'none';
+
+                console.log('Hoàn thành Part 1');
+            } catch (err) {
+                console.error('Lỗi Part 1: ' + err.message);
+            }
+        };
+
+        const loadAll = async function (imgArr) {
+            try {
+                const imgs = imgArr.map(async imgPath => await createImage(imgPath));
+                
+                const imgsEl = await Promise.all(imgs);
+            
+                imgsEl.forEach(img => img.classList.add('parallel'));
+                
+                console.log('Hoàn thành Part 2: Tải song song');
+            } catch (err) {
+                console.error('Lỗi Part 2: ' + err.message);
+            }
+        };
+
+        loadNPause().then(() => {
+            const testImages = [
+                'https://picsum.photos/id/30/500/300',
+                'https://picsum.photos/id/40/500/300',
+                'https://picsum.photos/id/50/500/300'
+            ];
+            loadAll(testImages);
+        });
+
+    </script>
+</body>
+</html>

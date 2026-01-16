@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Loading Challenge - Fixed</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        .images {
+            margin-top: 20px;
+        }
+        .images img {
+            width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thử thách tải ảnh với Promise</h1>
+    <div class="images"></div>
+
+    <script>
+        const imgContainer = document.querySelector('.images');
+
+        const wait = function (seconds) {
+            return new Promise(function (resolve) {
+                setTimeout(resolve, seconds * 1000);
+            });
+        };
+
+        const createImage = function (imgPath) {
+            return new Promise(function (resolve, reject) {
+                const img = document.createElement('img');
+                img.src = imgPath;
+
+                img.addEventListener('load', function () {
+                    imgContainer.append(img);
+                    resolve(img);
+                });
+
+                img.addEventListener('error', function () {
+                    reject(new Error('Không tìm thấy tệp ảnh tại: ' + imgPath));
+                });
+            });
+        };
+
+        let currentImg;
+
+        createImage('https://picsum.photos/id/10/500/300')
+            .then(img => {
+                currentImg = img;
+                console.log('Ảnh 1 đã tải xong');
+                return wait(2);
+            })
+            .then(() => {
+                currentImg.style.display = 'none'; 
+                return createImage('https://picsum.photos/id/20/500/300'); 
+            })
+            .then(img => {
+                currentImg = img;
+                console.log('Ảnh 2 đã tải xong');
+                return wait(2);
+            })
+            .then(() => {
+                currentImg.style.display = 'none'; 
+                console.log('Hoàn thành chuỗi tải ảnh!');
+            })
+            .catch(err => {
+                console.error('Lỗi hệ thống: ', err.message);
+                imgContainer.insertAdjacentHTML('beforeend', `<p style="color:red">${err.message}</p>`);
+            });
+
+    </script>
+</body>
+</html>

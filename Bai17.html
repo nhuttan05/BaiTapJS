@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f0f0; display: flex; justify-content: center; padding: 50px; }
+        .countries { display: flex; font-size: 20px; opacity: 0; transition: opacity 1s; }
+        .country { background-color: #fff; box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.1); border-radius: 0.7rem; width: 300px; overflow: hidden; }
+        .country__img { height: 170px; width: 100%; object-fit: cover; background-color: #eee; }
+        .country__data { padding: 25px; }
+    </style>
+</head>
+<body>
+    <div class="countries"></div>
+
+    <script>
+        const countriesContainer = document.querySelector('.countries');
+
+        // Hàm hỗ trợ render quốc gia lên giao diện
+        const renderCountry = function (data, className = '') {
+            const html = `
+            <article class="country ${className}">
+                <img class="country__img" src="${data.flags.svg}" />
+                <div class="country__data">
+                    <h3 class="country__name">${data.name.common}</h3>
+                    <h4 class="country__region">${data.region}</h4>
+                    <p class="country__row"><span>👫</span>${(+data.population / 1000000).toFixed(1)}M people</p>
+                </div>
+            </article>
+            `;
+            countriesContainer.insertAdjacentHTML('beforeend', html);
+            countriesContainer.style.opacity = 1;
+        };
+
+        // --- BẮT ĐẦU THỬ THÁCH ---
+
+       const whereAmI = function (lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Hết lượt yêu cầu API (${res.status})`);
+      return res.json();
+    })
+    .then(data => {
+      // KIỂM TRA QUAN TRỌNG: Nếu API trả về thông báo bị chặn (Throttled)
+      if (data.success === false || data.city?.includes('Throttled')) {
+        throw new Error('Yêu cầu quá nhanh! Hãy đợi vài giây rồi thử lại.');
+      }
+
+      console.log(`You are in ${data.city}, ${data.country}`);
+      return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Không tìm thấy quốc gia (${res.status})`);
+      return res.json();
+    })
+    .then(data => renderCountry(data[0]))
+    .catch(err => console.error(`${err.message} 💥`));
+};
+
+        // Test data
+        // Lưu ý: Geocode.xyz giới hạn 3 requests/giây, nên ta dùng setTimeout để tránh lỗi 403
+        setTimeout(() => whereAmI(52.508, 13.381), 0);
+        setTimeout(() => whereAmI(19.037, 72.873), 2500);
+        setTimeout(() => whereAmI(-33.933, 18.474), 5000);
+
+    </script>
+</body>
+</html>
